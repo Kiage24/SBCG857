@@ -1,75 +1,92 @@
-# SBCG857
-Sequencing,sequencing analysis and HPC.
+# ALLIGNMENT
 
-# QC ASSIGNMENT 1
-## EXERCISE 1
-1. What does RG stand for?
+## Question 1
 
-Read group;it indicates the number of reads for a given sample
+What is the length of chromosome 1 of the mouse genome?
 
-2. What is the sequencing platform?
+195471971
 
-Illumina
-
-3. What is the sequencing centre?
-
-SC
-
-4. What is the lane ID?
-
-5. What is the expected fragment insert size?
-
-2000
-
-## EXERCISE 2
-1. What version of the human assembly was used to perform the alignments? 
-
-NCBI37  
-
-2. How many lanes are in this BAM file? 
-
-15
+## Index the reference file.
 
 ```
-samtools view -H NA20538.bam | grep '^@RG'| wc -l
+bwa index
 ```
-3. What programs were used to create this BAM file?
+## Align the paired fastq files to the indexed reference file.
 
-samtools	
-
-4.What version of bwa was used to align the reads?
-
-
-## EXERCISE 3
-1. What is the name of the first read? 
-
-ERR003814.1408899 
-
-2. What position does the alignment of the read start at?
-
-3. What is the mapping quality of the first read?
-
-23 
-
-4. Can you convert the BAM file to a CRAM file called yeast.cram using the samtools view command?
 ```
-samtools view -T Saccharomyces_cerevisiae.EF4.68.dna.toplevel.fa -C yeast.bam -o yeast.cram
+bwa mem GRCm38.68.dna.toplevel.fa ../Documents/course_data/Module3_ReadAlignment/Exercise2/fastq/md5638a_7_87000000_R1.fastq ../Documents/course_data/Module3_ReadAlignment/Exercise2/fastq/md5638a_7_87000000_R2.fastq
 ```
-5. What is the size of the CRAM file?
+## Convert the SAM file to a BAM file
 
-18M 
 ```
-ls -lh yeast.cram 
+samtools view -O BAM md5638-2.sam -o md5638-2.bam
 ```
-6. Is your CRAM file smaller than the original BAM file?
+## Sort the BAM file.
 
-yes ,
-
-BAM file ; 34M
-
-CRAM file ; 18M
 ```
-ls -lh yeast.bam
+samtools sort -T temp -o md5638-2.sorted.bam md5638-2.bam 
 ```
-## EXERCISE 4
-1. 
+
+## Index the sorted BAM file
+
+```
+samtools index md5638-2.sorted.bam
+```
+
+## Mark Duplicates using the sorted bam file
+
+```
+picard-tools MarkDuplicates I= md5638-2.sorted.bam O= md5638-2.markdup.bam M= md5638-2.metrics.txt
+```
+## Index the resultant file
+
+```
+samtools index md5638-2.markdup.bam
+```
+## Generate statistics 
+
+```
+stats md5638-2.markdup.bam
+```
+What is the total number of reads?
+
+ 392820
+
+What proportion of the reads was mappped?
+
+ 391594
+ 
+How many reads were paired correctly/properly?
+
+389366
+
+How many reads mapped to a different chromosone?
+
+37
+
+What is the insert size mean and standard deviation?
+
+418.5,
+112.9
+
+## Create QC plots
+
+```
+plot-bamstats -p md5639.2_plot md5638-2.markdup.stats 
+```
+
+## View plots
+ 
+ ```
+ fireox md5639.2_plot.html
+ ```
+ ## BAM visualization.
+ 
+ ```
+ igv
+ ```
+
+
+
+
+
