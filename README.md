@@ -17,6 +17,8 @@ SC
 
 4. What is the lane ID?
 
+ERR003612
+
 5. What is the expected fragment insert size?
 
 2000
@@ -38,6 +40,8 @@ samtools view -H NA20538.bam | grep '^@RG'| wc -l
 samtools	
 
 4.What version of bwa was used to align the reads?
+
+VN:1.0 
 
 
 ## EXERCISE 3
