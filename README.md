@@ -76,4 +76,29 @@ CRAM file ; 18M
 ls -lh yeast.bam
 ```
 ## EXERCISE 4
-1. 
+1. What version of the human assembly the coordinates refer to?
+
+```
+bcftools view -h 1kg.bcf | less
+```
+
+VCFv4.1
+
+2.Can you convert the file called 1kg.bcf to a compressed VCF file called 1kg.vcf.gz using the bcftools view command?
+
+No it requires an indexed file
+
+3. Index the BCF
+
+```
+bcftools index 1kg.bcf
+```
+4. Extract all records from the region 20:24042765-24043073
+
+
+
+
+
+
+
+
