@@ -1,28 +1,28 @@
 # SBCG857
-Sequencing,sequencing analysis and HPC.
+## Sequencing,sequencing analysis and HPC.
 
 # QC ASSIGNMENT 1
 
 ## EXERCISE 1:SAM header line
 Look at the following line from the header of the BAM file
 
-What does RG stand for?
+Q.What does RG stand for?
 
  Read group;it indicates the number of reads for a given sample
 
-What is the sequencing platform?
+Q.What is the sequencing platform?
 
  Illumina
 
-What is the sequencing centre?
+Q.What is the sequencing centre?
 
  SC
 
-What is the lane ID?
+Q.What is the lane ID?
 
  ERR003612
 
-What is the expected fragment insert size?
+Q.What is the expected fragment insert size?
 
  2000
 
@@ -33,22 +33,22 @@ Use the samtools view command to print the header of the BAM file
 samtools view -H NA20538.bam | less
 ```
 
-What version of the human assembly was used to perform the alignments? 
+Q.What version of the human assembly was used to perform the alignments? 
  
  v37  
 
-How many lanes are in this BAM file? 
+Q.How many lanes are in this BAM file? 
 
  15
 
 ```
 samtools view -H NA20538.bam | grep '^@RG'| wc -l
 ```
-What programs were used to create this BAM file?
+Q.What programs were used to create this BAM file?
 
  samtools	
 
-What version of bwa was used to align the reads?
+Q.What version of bwa was used to align the reads?
 
  VN:1.0 
 
@@ -56,31 +56,31 @@ What version of bwa was used to align the reads?
 ## EXERCISE 3:Alignment formats conversion
 Use samtools to convert between SAM<->BAM and to view or extract regions of a BAM file
 
-What is the name of the first read? 
+Q.What is the name of the first read? 
 
  ERR003814.1408899 
 
-What position does the alignment of the read start at?
+Q.What position does the alignment of the read start at?
 
  163
  
-What is the mapping quality of the first read?
+Q.What is the mapping quality of the first read?
 
  23 
 
-Can you convert the BAM file to a CRAM file called yeast.cram using the samtools view command?
+Q.Can you convert the BAM file to a CRAM file called yeast.cram using the samtools view command?
 
 ```
 samtools view -T Saccharomyces_cerevisiae.EF4.68.dna.toplevel.fa -C yeast.bam -o yeast.cram
 ```
-What is the size of the CRAM file?
+Q.What is the size of the CRAM file?
 
 18M
 
 ```
 ls -lh yeast.cram 
 ```
-Is your CRAM file smaller than the original BAM file?
+Q.Is your CRAM file smaller than the original BAM file?
 
  yes ,
 
@@ -98,7 +98,7 @@ Use bcftools to convert between VCF<->BCF and to view or extract records from a 
 ```
 bcftools view -h 1kg.bcf | less
 ```
-What version of the human assembly the coordinates refer to?
+Q.What version of the human assembly the coordinates refer to?
 
 GRCh37
 
@@ -106,8 +106,7 @@ GRCh37
 bcftools view -h 1kg.bcf | less
 ```
 
-
-Can you convert the file called 1kg.bcf to a compressed VCF file called 1kg.vcf.gz using the bcftools view command?
+Q.Can you convert the file called 1kg.bcf to a compressed VCF file called 1kg.vcf.gz using the bcftools view command?
 
  No it requires an indexed file
 
@@ -116,6 +115,7 @@ Index the BCF
 ```
 bcftools index 1kg.bcf
 ```
+
 Extract all records from the region 20:24042765-24043073
 
 ```
@@ -124,7 +124,7 @@ bcftools view 1kg.bcf region 20:24042765-24043073|less -S
 
 The versatile bcftools query command can be used to extract any VCF field;
 
-How many samples are in the BCF?
+Q.How many samples are in the BCF?
 
  50 samples
  
@@ -132,7 +132,7 @@ How many samples are in the BCF?
 bcftools query -l 1kg.bcf | wc -l
 ```
 
-What is the genotype of the sample HG00107 at the position 20:24019472?
+Q.What is the genotype of the sample HG00107 at the position 20:24019472?
 
  A/T
 
@@ -140,14 +140,14 @@ What is the genotype of the sample HG00107 at the position 20:24019472?
 bcftools query -r 20:24019472 -s HG00107 -f'[%TGT]\n' 1kg.bcf
 ```
 
-How many positions there are with more than 10 alternate alleles?
+Q.How many positions there are with more than 10 alternate alleles?
 
 ```
 bcftools query -f'[%AC]\n' -i'AC>10' 1kg.bcf| wc -l
 ```
 4778
 
-List all positions where HG00107 has a non-reference genotype and the read depth is bigger than 10
+Q.List all positions where HG00107 has a non-reference genotype and the read depth is bigger than 10
 
 
 ## Exercise 5:Generate QC stats
@@ -163,24 +163,24 @@ samtools stats -F SECONDARY lane1.sorted.bam > lane1.sorted.bam.bchk
 ```
 Look at the output and answer the following questions
 
-What is the total number of reads?
+Q.What is the total number of reads?
 
  400252
 
-What proportion of the reads were mapped?
+Q.What proportion of the reads were mapped?
 
  303036
 
-How many reads were mapped to a different chromosome?
+Q.How many reads were mapped to a different chromosome?
  
  2235
  
-What is the insert size mean and standard deviation?
+Q.What is the insert size mean and standard deviation?
 
  Mean - 275.9
  Standard deviation - 47.7
  
-How many reads were paired properly?
+Q.How many reads were paired properly?
  
  282478
  
@@ -189,11 +189,11 @@ Create some QC plots from the output of the stats command;
 ```
 plot-bamstats -p lane1-plots/ lane1.sorted.bam.bchk
 ```
-How many reads have zero mapping quality?
+Q.How many reads have zero mapping quality?
 
  23,803
 
-Which of the first fragments or second fragments are higher base quality on average?
+Q.Which of the first fragments or second fragments are higher base quality on average?
 
  
 
