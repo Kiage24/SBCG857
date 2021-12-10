@@ -149,6 +149,9 @@ bcftools query -f'[%AC]\n' -i'AC>10' 1kg.bcf| wc -l
 
 Q.List all positions where HG00107 has a non-reference genotype and the read depth is bigger than 10
 
+```
+bcftools query -s HG00107 -f'%CHROM %
+
 
 ## Exercise 5:Generate QC stats
 Create the mappings
@@ -194,6 +197,8 @@ Q.How many reads have zero mapping quality?
  23,803
 
 Q.Which of the first fragments or second fragments are higher base quality on average?
+ 
+ Foward reads
 
  
 
