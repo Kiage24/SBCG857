@@ -159,6 +159,27 @@ For this we will  need to query the second value of the AD field. Note that the 
 bcftools query -f'%POS %QUAL [%GT %AD] %REF %ALT\n' -i'QUAL>=30 && AD[0:1]>=25 ' out.vcf | head
 ```
 
+Finally, use the following command to obtain the ts/tv of unfiltered callset.
+
+   bcftools stats out.vcf | grep TSTV | cut -f5
+
+       Q: How the ts/tv changes if you apply the filters above? Use the bcftools stats command with the -i
+       option to include calls with QUAL at least 30 and the number of alternate reads at least 25.
+
+
+       Q: What is the ts/tv of removed sites?
+^L       Q: The test data come from inbred homozygous mouse, therefore any heterozygous genotypes are
+       most likely mapping and alignment artefacts. Can you find out what is the ts/tv of heterozyous SNPs?
+       Use bcftools view -i 'GT="het"' to select or bcftools view -e 'GT="het"' to exclude sites with
+       heterozygous genotypes.
+
+
+Another useful command is filter which allows to annotate the VCF file soft filters based on the given
+expression, rather than removing the sites completely. Can you apply the above filters to produce a final callset
+and apply the -g and -G options to soft filter variants around indels?
+bcftools filter -sLowQual -m+ -i'QUAL>=30 && AD[1]>=25' -g8 -G10 out.vcf -o out.flt.vcf
+
+
 
 
 
