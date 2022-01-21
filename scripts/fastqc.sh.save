@@ -1,0 +1,9 @@
+#!usr/bin/bash
+
+#Running fastqc on file.
+
+fastqc yeast.bam -o ../results/
+
+# Plot statistics
+
+firefox .html 
